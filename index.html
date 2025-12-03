@@ -1223,4 +1223,435 @@
               <i class="fab fa-github"></i>
             </a>
             <a href="https://linkedin.com" class="social-link" target="_blank">
-              <i class="fab
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://wa.me/918618535376" class="social-link" target="_blank">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Abhiveer</div>
+        <p>IoT, Embedded Systems & 3D Design Solutions</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="footer-column">
+          <h5>Services</h5>
+          <a href="#services">IoT Development</a>
+          <a href="#services">3D Design</a>
+          <a href="#services">Web Development</a>
+          <a href="#services">Mobile Apps</a>
+        </div>
+        
+        <div class="footer-column">
+          <h5>Company</h5>
+          <a href="#home">Home</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <a href="#" id="openSubmitFooter">Submit Project</a>
+        </div>
+        
+        <div class="footer-column">
+          <h5>Connect</h5>
+          <a href="mailto:saiveerareddy6@gmail.com">Email</a>
+          <a href="https://wa.me/918618535376" target="_blank">WhatsApp</a>
+          <a href="https://github.com" target="_blank">GitHub</a>
+          <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      © <span id="year"></span> Abhiveer. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Project Submission Modal -->
+  <div class="modal" id="projectModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Submit Your Project</h3>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <form id="projectForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="projectTitle">Project Title *</label>
+              <input type="text" id="projectTitle" class="form-control" placeholder="e.g. Smart Home Automation System" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="projectType">Project Type *</label>
+              <select id="projectType" class="form-control" required>
+                <option value="">Select type</option>
+                <option value="iot">IoT / Embedded System</option>
+                <option value="3d">3D Design / Modeling</option>
+                <option value="web">Web Application</option>
+                <option value="mobile">Mobile Application</option>
+                <option value="full-stack">Full-Stack Solution</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group form-full">
+              <label for="projectDescription">Project Description *</label>
+              <textarea id="projectDescription" class="form-control" rows="4" placeholder="Describe your project requirements, features, and timeline..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="projectBudget">Budget (Optional)</label>
+              <input type="text" id="projectBudget" class="form-control" placeholder="₹ Estimated budget">
+            </div>
+            
+            <div class="form-group">
+              <label for="projectContact">Contact Email *</label>
+              <input type="email" id="projectContact" class="form-control" placeholder="Your email address" required>
+            </div>
+            
+            <div class="form-group form-full">
+              <label>Upload Files (Optional)</label>
+              <div class="file-upload-area" id="fileUploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop files or click to browse</p>
+                <p class="small">Max 6 files. Images, PDF, DOC (Max 10MB each)</p>
+                <input type="file" id="projectFiles" multiple accept="image/*,.pdf,.doc,.docx" hidden>
+              </div>
+              
+              <div class="preview-grid" id="previewGrid"></div>
+            </div>
+          </div>
+          
+          <div class="modal-actions">
+            <button type="button" class="btn secondary" id="cancelBtn">Cancel</button>
+            <button type="submit" class="btn primary">
+              <i class="fas fa-paper-plane"></i> Submit Project
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const openSubmitBtns = document.querySelectorAll('#openSubmit, #openSubmit2, #openSubmitFooter, #open3DSubmit');
+    const modal = document.getElementById('projectModal');
+    const closeModal = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const projectForm = document.getElementById('projectForm');
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileInput = document.getElementById('projectFiles');
+    const previewGrid = document.getElementById('previewGrid');
+    const projectsGrid = document.getElementById('projectsGrid');
+    const clearLocalBtn = document.getElementById('clearLocal');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.querySelector('.nav-links');
+    const contactForm = document.getElementById('contactForm');
+
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Modal Functions
+    function showModal() {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      projectForm.reset();
+      previewGrid.innerHTML = '';
+    }
+
+    // Event Listeners for Modal
+    openSubmitBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showModal();
+        
+        // If 3D button was clicked, pre-select 3D option
+        if (btn.id === 'open3DSubmit') {
+          document.getElementById('projectType').value = '3d';
+        }
+      });
+    });
+
+    closeModal.addEventListener('click', hideModal);
+    cancelBtn.addEventListener('click', hideModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) hideModal();
+    });
+
+    // Mobile Menu Toggle
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // File Upload Handling
+    fileUploadArea.addEventListener('click', () => fileInput.click());
+
+    fileUploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileUploadArea.style.borderColor = 'var(--primary)';
+      fileUploadArea.style.backgroundColor = 'rgba(37, 99, 235, 0.05)';
+    });
+
+    fileUploadArea.addEventListener('dragleave', () => {
+      fileUploadArea.style.borderColor = 'var(--gray-light)';
+      fileUploadArea.style.backgroundColor = 'transparent';
+    });
+
+    fileUploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileUploadArea.style.borderColor = 'var(--gray-light)';
+      fileUploadArea.style.backgroundColor = 'transparent';
+      
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelection();
+      }
+    });
+
+    fileInput.addEventListener('change', handleFileSelection);
+
+    function handleFileSelection() {
+      previewGrid.innerHTML = '';
+      const files = Array.from(fileInput.files).slice(0, 6);
+      
+      files.forEach((file, index) => {
+        if (!file.type.match('image.*') && !file.type.match('application/pdf') && !file.type.match('application/msword') && !file.type.match('application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
+          alert(`File ${file.name} is not a supported format. Please upload images, PDF, or DOC files only.`);
+          return;
+        }
+        
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`File ${file.name} is too large. Maximum size is 10MB.`);
+          return;
+        }
+        
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+          const previewItem = document.createElement('div');
+          previewItem.className = 'preview-item';
+          
+          if (file.type.match('image.*')) {
+            previewItem.innerHTML = `
+              <img src="${e.target.result}" alt="${file.name}">
+              <button class="remove-btn" data-index="${index}">&times;</button>
+            `;
+          } else {
+            previewItem.innerHTML = `
+              <div style="background: #f1f5f9; height: 100%; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-file" style="font-size: 2rem; color: #64748b;"></i>
+              </div>
+              <button class="remove-btn" data-index="${index}">&times;</button>
+            `;
+          }
+          
+          previewGrid.appendChild(previewItem);
+          
+          // Add event listener to remove button
+          previewItem.querySelector('.remove-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            removeFile(index);
+          });
+        };
+        
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function removeFile(index) {
+      const dt = new DataTransfer();
+      const files = Array.from(fileInput.files);
+      
+      files.splice(index, 1);
+      
+      files.forEach(file => dt.items.add(file));
+      fileInput.files = dt.files;
+      
+      handleFileSelection();
+    }
+
+    // Project Form Submission
+    projectForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const project = {
+        id: Date.now(),
+        title: document.getElementById('projectTitle').value,
+        type: document.getElementById('projectType').value,
+        description: document.getElementById('projectDescription').value,
+        budget: document.getElementById('projectBudget').value,
+        contact: document.getElementById('projectContact').value,
+        files: fileInput.files.length,
+        createdAt: new Date().toISOString()
+      };
+      
+      // Create preview for first image if available
+      if (fileInput.files.length > 0 && fileInput.files[0].type.match('image.*')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          project.preview = e.target.result;
+          saveProject(project);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        saveProject(project);
+      }
+    });
+
+    // Save Project to Local Storage
+    function saveProject(project) {
+      const projects = JSON.parse(localStorage.getItem('abhiveer_projects') || '[]');
+      projects.unshift(project);
+      localStorage.setItem('abhiveer_projects', JSON.stringify(projects));
+      
+      loadProjects();
+      hideModal();
+      
+      // Show success message
+      alert('Project submitted successfully! We will contact you soon. (This is a demo - in production, this would be sent to our server)');
+    }
+
+    // Load Projects from Local Storage
+    function loadProjects() {
+      projectsGrid.innerHTML = '';
+      const projects = JSON.parse(localStorage.getItem('abhiveer_projects') || '[]');
+      
+      if (projects.length === 0) {
+        projectsGrid.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-folder-open"></i>
+            <h3>No projects yet</h3>
+            <p>Submit your first project using the form above</p>
+          </div>
+        `;
+        return;
+      }
+      
+      projects.forEach(project => {
+        const typeLabels = {
+          'iot': 'IoT/Embedded',
+          '3d': '3D Design',
+          'web': 'Web App',
+          'mobile': 'Mobile App',
+          'full-stack': 'Full-Stack',
+          'other': 'Other'
+        };
+        
+        const typeColors = {
+          'iot': 'primary',
+          '3d': 'secondary',
+          'web': 'success',
+          'mobile': 'warning',
+          'full-stack': 'primary',
+          'other': 'gray'
+        };
+        
+        const projectCard = document.createElement('div');
+        projectCard.className = 'project-card';
+        
+        projectCard.innerHTML = `
+          <div class="project-image">
+            ${project.preview ? `<img src="${project.preview}" alt="${project.title}">` : 
+              `<div style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0); height: 100%; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-project-diagram" style="font-size: 3rem; color: #94a3b8;"></i>
+              </div>`}
+          </div>
+          <div class="project-content">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+              <h4>${escapeHtml(project.title)}</h4>
+              <span class="badge ${typeColors[project.type] || 'primary'}">${typeLabels[project.type] || 'Project'}</span>
+            </div>
+            <p>${escapeHtml(project.description.substring(0, 120))}${project.description.length > 120 ? '...' : ''}</p>
+            <div class="project-meta">
+              <span><i class="fas fa-calendar-alt"></i> ${new Date(project.createdAt).toLocaleDateString()}</span>
+              ${project.budget ? `<span><i class="fas fa-rupee-sign"></i> ${escapeHtml(project.budget)}</span>` : ''}
+            </div>
+            ${project.files ? `<div class="project-tags"><span class="tag"><i class="fas fa-paperclip"></i> ${project.files} file(s)</span></div>` : ''}
+          </div>
+        `;
+        
+        projectsGrid.appendChild(projectCard);
+      });
+    }
+
+    // Clear Local Storage
+    clearLocalBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all locally stored projects?')) {
+        localStorage.removeItem('abhiveer_projects');
+        loadProjects();
+      }
+    });
+
+    // Contact Form Submission
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const message = document.getElementById('contactMessage').value;
+      
+      // In production, this would be sent to a server
+      alert(`Thank you, ${name}! Your message has been sent. We will contact you at ${email} soon.`);
+      contactForm.reset();
+    });
+
+    // Utility Functions
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Initialize
+    loadProjects();
+    
+    // Responsive Nav Behavior
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        navLinks.style.display = 'flex';
+      } else {
+        navLinks.style.display = 'none';
+      }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        if (this.getAttribute('href') === '#') return;
+        
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (window.innerWidth <= 768) {
+            navLinks.style.display = 'none';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
