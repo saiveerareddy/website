@@ -3,234 +3,1224 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Abhiveer — Hardware & Software Projects</title>
-  <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Abhiveer — Professional IoT, embedded and web projects. Describe your project and upload photos." />
+  <title>Abhiveer — IoT, Embedded & 3D Design Solutions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Professional IoT, embedded systems, 3D design & full-stack development services. From prototyping to production." />
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #7c3aed;
+      --accent: #0ea5e9;
+      --accent-2: #ec4899;
+      --dark: #0f172a;
+      --dark-light: #1e293b;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --gray-light: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 0.75rem 0;
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand i {
+      font-size: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+      background-color: rgba(37, 99, 235, 0.05);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: var(--transition);
+      transform: translateX(-50%);
+    }
+
+    .nav-links a:hover::after {
+      width: 80%;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn.secondary {
+      background-color: white;
+      color: var(--primary);
+      border: 1px solid var(--gray-light);
+      box-shadow: var(--shadow);
+    }
+
+    .btn.secondary:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .btn.small {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--dark);
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 4rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(124, 58, 237, 0.03) 100%);
+      clip-path: polygon(100% 0, 100% 100%, 0 0);
+      z-index: -1;
+    }
+
+    .hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--dark), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content .lead {
+      font-size: 1.25rem;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      max-width: 90%;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat .label {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .floating-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .floating-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .floating-card h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--dark);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .service-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      border-radius: var(--radius);
+      background-color: rgba(37, 99, 235, 0.05);
+      transition: var(--transition);
+    }
+
+    .service-item:hover {
+      transform: translateY(-5px);
+      background-color: rgba(37, 99, 235, 0.1);
+    }
+
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      color: white;
+      font-size: 1.25rem;
+    }
+
+    .service-item h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    /* Section Styles */
+    .section {
+      margin: 4rem 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-head h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dark);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-head h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid var(--gray-light);
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .project-image {
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .project-card:hover .project-image img {
+      transform: scale(1.05);
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-content h4 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .project-content p {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      background-color: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: var(--radius);
+      border: 2px dashed var(--gray-light);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--gray-light);
+      margin-bottom: 1rem;
+    }
+
+    /* Services Section */
+    .services-section {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(124, 58, 237, 0.03) 100%);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      margin: 4rem 0;
+    }
+
+    .services-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-card i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .service-card h4 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .service-card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    /* 3D Design Section */
+    .design-3d-section {
+      background: var(--dark);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      margin: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .design-3d-section::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .design-3d-content {
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .design-3d-content h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .design-3d-content p {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+    }
+
+    .design-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .design-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .design-feature i {
+      color: var(--accent);
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-form {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-form h4 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      color: var(--dark);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .contact-info {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-info h4 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-item i {
+      font-size: 1.25rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+    }
+
+    .footer-brand {
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), white);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .footer-column h5 {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .footer-column a {
+      display: block;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      margin-bottom: 0.75rem;
+      transition: var(--transition);
+    }
+
+    .footer-column a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1.5rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 1.5rem;
+      color: var(--dark);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--gray);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      color: var(--dark);
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .form-full {
+      grid-column: 1 / -1;
+    }
+
+    .file-upload-area {
+      border: 2px dashed var(--gray-light);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .file-upload-area:hover {
+      border-color: var(--primary);
+      background-color: rgba(37, 99, 235, 0.02);
+    }
+
+    .file-upload-area i {
+      font-size: 2.5rem;
+      color: var(--gray-light);
+      margin-bottom: 1rem;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .preview-item {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      height: 100px;
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-item .remove-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--gray-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .hero {
+        padding: 2rem 1rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .services-grid, .design-features {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-links {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .modal-content {
+        margin: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      .services-section, .design-3d-section {
+        padding: 2rem 1rem;
+      }
+      
+      .container {
+        padding: 0 1rem 2rem;
+      }
+    }
+
+    /* Utility Classes */
+    .text-gradient {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge.primary {
+      background-color: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+    }
+
+    .badge.secondary {
+      background-color: rgba(124, 58, 237, 0.1);
+      color: var(--secondary);
+    }
+
+    .badge.success {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
+  <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
-      <a class="brand" href="#">Abhiveer</a>
+      <a class="brand" href="#">
+        <i class="fas fa-microchip"></i>
+        Abhiveer
+      </a>
+      
       <div class="nav-links">
+        <a href="#home">Home</a>
         <a href="#projects">Projects</a>
-        <a href="#how">How it works</a>
+        <a href="#services">Services</a>
+        <a href="#3d-design">3D Design</a>
         <a href="#contact">Contact</a>
         <button id="openSubmit" class="btn primary">Submit Project</button>
       </div>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </nav>
 
-  <header class="hero">
+  <!-- Hero Section -->
+  <section class="hero" id="home">
     <div class="hero-inner">
-      <div class="hero-left">
-        <h1>Abhiveer — Hardware & Software Projects</h1>
-        <p class="lead">We design & build IoT, embedded systems and full-stack solutions. Describe your project, upload photos and we'll get back with a quote.</p>
-        <div class="hero-ctas">
-          <button id="openSubmit2" class="btn primary">Describe your project</button>
-          <a href="#projects" class="btn ghost">Explore projects</a>
+      <div class="hero-content">
+        <h1>IoT, Embedded Systems & <span class="text-gradient">3D Design</span> Solutions</h1>
+        <p class="lead">From concept to production, we design and build cutting-edge IoT devices, embedded systems, and 3D models with full-stack integration.</p>
+        
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="number">50+</div>
+            <div class="label">Projects Completed</div>
+          </div>
+          <div class="stat">
+            <div class="number">100%</div>
+            <div class="label">Client Satisfaction</div>
+          </div>
+          <div class="stat">
+            <div class="number">24/7</div>
+            <div class="label">Support Available</div>
+          </div>
         </div>
-
-        <div class="contact-quick">
-          <a href="mailto:saiveerareddy6@gmail.com">Email: saiveerareddy6@gmail.com</a>
-          <a href="https://wa.me/918618535376" target="_blank" rel="noreferrer">WhatsApp</a>
-          <span>Phone: +91 8618535376</span>
+        
+        <div class="hero-ctas">
+          <button id="openSubmit2" class="btn primary">
+            <i class="fas fa-paper-plane"></i> Submit Your Project
+          </button>
+          <a href="#contact" class="btn secondary">
+            <i class="fas fa-phone-alt"></i> Contact Us
+          </a>
         </div>
       </div>
-
-      <div class="hero-right card">
-        <h3>What we do</h3>
-        <ul>
-          <li>IoT & embedded systems</li>
-          <li>Web & mobile apps</li>
-          <li>Prototyping to production</li>
-          <li>Payment & backend integration</li>
-        </ul>
+      
+      <div class="hero-visual">
+        <div class="floating-card">
+          <h3>Our Expertise</h3>
+          <div class="services-grid">
+            <div class="service-item">
+              <div class="service-icon">
+                <i class="fas fa-microchip"></i>
+              </div>
+              <h4>IoT & Embedded</h4>
+              <p>Hardware & firmware</p>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">
+                <i class="fas fa-cube"></i>
+              </div>
+              <h4>3D Design</h4>
+              <p>Modeling & prototyping</p>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <h4>Web & Mobile</h4>
+              <p>Full-stack apps</p>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">
+                <i class="fas fa-server"></i>
+              </div>
+              <h4>Backend</h4>
+              <p>Cloud & APIs</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
+  </section>
 
   <main class="container">
+    <!-- Projects Section -->
     <section id="projects" class="section">
       <div class="section-head">
-        <h2>Recent Requests & Projects</h2>
-        <div class="admin-actions">
-          <button id="clearLocal" class="text-btn">Clear local</button>
+        <h2>Recent Projects</h2>
+        <div>
+          <button id="clearLocal" class="btn secondary small">Clear Local Data</button>
         </div>
       </div>
-
-      <div id="projectsGrid" class="grid">
-        <div class="empty">No projects yet — submit one using the form.</div>
+      
+      <div id="projectsGrid" class="projects-grid">
+        <!-- Projects will be loaded here -->
+        <div class="empty-state">
+          <i class="fas fa-folder-open"></i>
+          <h3>No projects yet</h3>
+          <p>Submit your first project using the form above</p>
+        </div>
       </div>
     </section>
 
-    <section id="how" class="section cards-3">
-      <h3>How it works</h3>
-      <div class="card small">
-        <h4>1. Describe</h4>
-        <p>Fill the form, add photos/diagrams and budget if available.</p>
-      </div>
-      <div class="card small">
-        <h4>2. Quote</h4>
-        <p>We estimate cost, timeline and return a professional quote.</p>
-      </div>
-      <div class="card small">
-        <h4>3. Build</h4>
-        <p>We prototype, test and deliver with documentation and support.</p>
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+      <h2>Our Services</h2>
+      <p>Comprehensive solutions from hardware to software</p>
+      
+      <div class="services-cards">
+        <div class="service-card">
+          <i class="fas fa-microchip"></i>
+          <h4>IoT & Embedded Systems</h4>
+          <p>Design and development of IoT devices, PCB design, firmware programming, and sensor integration.</p>
+        </div>
+        
+        <div class="service-card">
+          <i class="fas fa-cube"></i>
+          <h4>3D Design & Modeling</h4>
+          <p>3D modeling, prototyping, CAD design, 3D printing, and product visualization services.</p>
+        </div>
+        
+        <div class="service-card">
+          <i class="fas fa-code"></i>
+          <h4>Web & Mobile Development</h4>
+          <p>Custom web and mobile applications with modern frameworks and responsive design.</p>
+        </div>
+        
+        <div class="service-card">
+          <i class="fas fa-server"></i>
+          <h4>Backend & Cloud</h4>
+          <p>API development, database design, cloud deployment, and payment integration.</p>
+        </div>
       </div>
     </section>
 
+    <!-- 3D Design Section -->
+    <section id="3d-design" class="design-3d-section">
+      <div class="design-3d-content">
+        <span class="badge secondary">3D Design</span>
+        <h3>Professional 3D Design Services</h3>
+        <p>From concept sketches to production-ready 3D models, we provide comprehensive 3D design services for prototypes, products, and architectural visualization.</p>
+        
+        <div class="design-features">
+          <div class="design-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>3D Modeling & CAD Design</span>
+          </div>
+          <div class="design-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Prototyping & 3D Printing</span>
+          </div>
+          <div class="design-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Product Visualization</span>
+          </div>
+          <div class="design-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Architectural Rendering</span>
+          </div>
+        </div>
+        
+        <button id="open3DSubmit" class="btn primary" style="margin-top: 2rem;">
+          <i class="fas fa-cube"></i> Start 3D Project
+        </button>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
     <section id="contact" class="section">
-      <h3>Contact & Quick Links</h3>
-      <div class="card contact-card">
-        <p>Email: <a href="mailto:saiveerareddy6@gmail.com">saiveerareddy6@gmail.com</a></p>
-        <p>Phone: +91 8618535376</p>
-        <p>WhatsApp: <a href="https://wa.me/918618535376" target="_blank" rel="noreferrer">Open chat</a></p>
-        <p>Office Hours: Mon — Sat 9:30 — 19:00 IST</p>
-        <div class="socials">
-          <a href="#" title="GitHub">GitHub</a>
-          <a href="#" title="LinkedIn">LinkedIn</a>
+      <h2>Contact Us</h2>
+      
+      <div class="contact-grid">
+        <div class="contact-form">
+          <h4>Get in Touch</h4>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="contactName">Name</label>
+              <input type="text" id="contactName" class="form-control" placeholder="Your name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="contactEmail">Email</label>
+              <input type="email" id="contactEmail" class="form-control" placeholder="Your email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="contactMessage">Message</label>
+              <textarea id="contactMessage" class="form-control" rows="5" placeholder="Tell us about your project..." required></textarea>
+            </div>
+            
+            <button type="submit" class="btn primary">Send Message</button>
+          </form>
         </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      © <span id="year"></span> Abhiveer — All rights reserved.
-    </footer>
-  </main>
-
-  <!-- Modal: Submit Project -->
-  <div id="modal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button id="closeModal" class="modal-close" aria-label="Close">&times;</button>
-      <h3>Describe your project</h3>
-      <form id="projectForm">
-        <label>Project title
-          <input name="title" placeholder="e.g. Smart Bus Ticketing System" required>
-        </label>
-
-        <label>Short description
-          <textarea name="description" rows="4" placeholder="Explain features, timeline..."></textarea>
-        </label>
-
-        <div class="form-row">
-          <label>Budget (optional)
-            <input name="budget" placeholder="₹" />
-          </label>
-          <label>Contact (email/phone)
-            <input name="contact" placeholder="Email or phone" />
-          </label>
-        </div>
-
-        <label>Upload photos / diagrams (max 6)
-          <input id="files" name="files" type="file" accept="image/*" multiple />
-        </label>
-
-        <div class="preview-grid" id="previewGrid"></div>
-
-        <div class="modal-actions">
-          <button type="button" id="cancelBtn" class="btn">Cancel</button>
-          <button type="submit" class="btn primary">Send request</button>
-        </div>
-        <div class="small muted">Submissions are stored locally in your browser for demo. Replace with a backend POST to save permanently.</div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    // small client JS for local demo storage and preview
-    const openSubmit = document.querySelectorAll('#openSubmit, #openSubmit2');
-    const modal = document.getElementById('modal');
-    const closeModal = document.getElementById('closeModal');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const projectForm = document.getElementById('projectForm');
-    const filesInput = document.getElementById('files');
-    const previewGrid = document.getElementById('previewGrid');
-    const projectsGrid = document.getElementById('projectsGrid');
-    const clearLocal = document.getElementById('clearLocal');
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    function showModal() { modal.setAttribute('aria-hidden', 'false'); modal.style.display = 'flex'; }
-    function hideModal() { modal.setAttribute('aria-hidden', 'true'); modal.style.display = 'none'; }
-
-    openSubmit.forEach(b => b.addEventListener('click', e => { e.preventDefault(); showModal(); }));
-    closeModal.addEventListener('click', hideModal);
-    cancelBtn.addEventListener('click', hideModal);
-    window.addEventListener('click', e => { if (e.target === modal) hideModal(); });
-
-    filesInput.addEventListener('change', () => {
-      previewGrid.innerHTML = '';
-      const files = Array.from(filesInput.files).slice(0,6);
-      files.forEach(f => {
-        const img = document.createElement('img');
-        img.className = 'thumb';
-        img.src = URL.createObjectURL(f);
-        img.alt = f.name;
-        previewGrid.appendChild(img);
-      });
-    });
-
-    function loadProjects() {
-      projectsGrid.innerHTML = '';
-      const arr = JSON.parse(localStorage.getItem('abhiveer_projects') || '[]');
-      if (!arr.length) {
-        projectsGrid.innerHTML = '<div class="empty">No projects yet — submit one using the form.</div>';
-        return;
-      }
-      arr.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'card project-card';
-        let imgHtml = '';
-        if (p.preview) imgHtml = '<div class="thumb-wrap"><img src="'+p.preview+'" alt=""></div>';
-        card.innerHTML = imgHtml + '<h4>' + escapeHtml(p.title) + '</h4><p class="muted">' + escapeHtml(p.description) + '</p><div class="meta"><span>' + (p.budget? '₹'+escapeHtml(p.budget) : '') + '</span><span>' + escapeHtml(p.contact||'') + '</span></div>';
-        projectsGrid.appendChild(card);
-      });
-    }
-
-    function escapeHtml(str = '') {
-      return str.replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-    }
-
-    projectForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const form = new FormData(projectForm);
-      const title = form.get('title') || 'Untitled';
-      const description = form.get('description') || '';
-      const budget = form.get('budget') || '';
-      const contact = form.get('contact') || '';
-      const files = Array.from(filesInput.files).slice(0,6);
-
-      // create preview for first image (data URL)
-      if (files.length) {
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          saveProject({ title, description, budget, contact, preview: evt.target.result });
-        };
-        reader.readAsDataURL(files[0]);
-      } else {
-        saveProject({ title, description, budget, contact, preview: null });
-      }
-      hideModal();
-      projectForm.reset();
-      previewGrid.innerHTML = '';
-    });
-
-    function saveProject(obj) {
-      const arr = JSON.parse(localStorage.getItem('abhiveer_projects') || '[]');
-      arr.unshift(Object.assign({ id: Date.now(), createdAt: new Date().toISOString() }, obj));
-      localStorage.setItem('abhiveer_projects', JSON.stringify(arr));
-      loadProjects();
-      alert('Thanks — your project was added locally. Replace this with an API call to store on server.');
-    }
-
-    clearLocal.addEventListener('click', () => {
-      if (!confirm('Clear all local projects?')) return;
-      localStorage.removeItem('abhiveer_projects');
-      loadProjects();
-    });
-
-    // init
-    loadProjects();
-  </script>
-</body>
-</html>
+        
+        <div class="contact-info">
+          <h4>Contact Information</h4>
+          
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <strong>Email</strong>
+              <p>saiveerareddy6@gmail.com</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <strong>Phone / WhatsApp</strong>
+              <p>+91 8618535376</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <strong>Office Hours</strong>
+              <p>Mon - Sat: 9:30 AM - 7:00 PM IST</p>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <a href="https://github.com" class="social-link" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com" class="social-link" target="_blank">
+              <i class="fab
