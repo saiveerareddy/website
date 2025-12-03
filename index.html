@@ -1,11 +1,236 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Abhiveer Site</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abhiveer — Hardware & Software Projects</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Abhiveer — Professional IoT, embedded and web projects. Describe your project and upload photos." />
 </head>
 <body>
-  <h1>Welcome to abhiveer.site</h1>
-  <p>Hosted on GitHub Pages!</p>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#">Abhiveer</a>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#how">How it works</a>
+        <a href="#contact">Contact</a>
+        <button id="openSubmit" class="btn primary">Submit Project</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <h1>Abhiveer — Hardware & Software Projects</h1>
+        <p class="lead">We design & build IoT, embedded systems and full-stack solutions. Describe your project, upload photos and we'll get back with a quote.</p>
+        <div class="hero-ctas">
+          <button id="openSubmit2" class="btn primary">Describe your project</button>
+          <a href="#projects" class="btn ghost">Explore projects</a>
+        </div>
+
+        <div class="contact-quick">
+          <a href="mailto:saiveerareddy6@gmail.com">Email: saiveerareddy6@gmail.com</a>
+          <a href="https://wa.me/918618535376" target="_blank" rel="noreferrer">WhatsApp</a>
+          <span>Phone: +91 8618535376</span>
+        </div>
+      </div>
+
+      <div class="hero-right card">
+        <h3>What we do</h3>
+        <ul>
+          <li>IoT & embedded systems</li>
+          <li>Web & mobile apps</li>
+          <li>Prototyping to production</li>
+          <li>Payment & backend integration</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="projects" class="section">
+      <div class="section-head">
+        <h2>Recent Requests & Projects</h2>
+        <div class="admin-actions">
+          <button id="clearLocal" class="text-btn">Clear local</button>
+        </div>
+      </div>
+
+      <div id="projectsGrid" class="grid">
+        <div class="empty">No projects yet — submit one using the form.</div>
+      </div>
+    </section>
+
+    <section id="how" class="section cards-3">
+      <h3>How it works</h3>
+      <div class="card small">
+        <h4>1. Describe</h4>
+        <p>Fill the form, add photos/diagrams and budget if available.</p>
+      </div>
+      <div class="card small">
+        <h4>2. Quote</h4>
+        <p>We estimate cost, timeline and return a professional quote.</p>
+      </div>
+      <div class="card small">
+        <h4>3. Build</h4>
+        <p>We prototype, test and deliver with documentation and support.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h3>Contact & Quick Links</h3>
+      <div class="card contact-card">
+        <p>Email: <a href="mailto:saiveerareddy6@gmail.com">saiveerareddy6@gmail.com</a></p>
+        <p>Phone: +91 8618535376</p>
+        <p>WhatsApp: <a href="https://wa.me/918618535376" target="_blank" rel="noreferrer">Open chat</a></p>
+        <p>Office Hours: Mon — Sat 9:30 — 19:00 IST</p>
+        <div class="socials">
+          <a href="#" title="GitHub">GitHub</a>
+          <a href="#" title="LinkedIn">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> Abhiveer — All rights reserved.
+    </footer>
+  </main>
+
+  <!-- Modal: Submit Project -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button id="closeModal" class="modal-close" aria-label="Close">&times;</button>
+      <h3>Describe your project</h3>
+      <form id="projectForm">
+        <label>Project title
+          <input name="title" placeholder="e.g. Smart Bus Ticketing System" required>
+        </label>
+
+        <label>Short description
+          <textarea name="description" rows="4" placeholder="Explain features, timeline..."></textarea>
+        </label>
+
+        <div class="form-row">
+          <label>Budget (optional)
+            <input name="budget" placeholder="₹" />
+          </label>
+          <label>Contact (email/phone)
+            <input name="contact" placeholder="Email or phone" />
+          </label>
+        </div>
+
+        <label>Upload photos / diagrams (max 6)
+          <input id="files" name="files" type="file" accept="image/*" multiple />
+        </label>
+
+        <div class="preview-grid" id="previewGrid"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancelBtn" class="btn">Cancel</button>
+          <button type="submit" class="btn primary">Send request</button>
+        </div>
+        <div class="small muted">Submissions are stored locally in your browser for demo. Replace with a backend POST to save permanently.</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // small client JS for local demo storage and preview
+    const openSubmit = document.querySelectorAll('#openSubmit, #openSubmit2');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const projectForm = document.getElementById('projectForm');
+    const filesInput = document.getElementById('files');
+    const previewGrid = document.getElementById('previewGrid');
+    const projectsGrid = document.getElementById('projectsGrid');
+    const clearLocal = document.getElementById('clearLocal');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function showModal() { modal.setAttribute('aria-hidden', 'false'); modal.style.display = 'flex'; }
+    function hideModal() { modal.setAttribute('aria-hidden', 'true'); modal.style.display = 'none'; }
+
+    openSubmit.forEach(b => b.addEventListener('click', e => { e.preventDefault(); showModal(); }));
+    closeModal.addEventListener('click', hideModal);
+    cancelBtn.addEventListener('click', hideModal);
+    window.addEventListener('click', e => { if (e.target === modal) hideModal(); });
+
+    filesInput.addEventListener('change', () => {
+      previewGrid.innerHTML = '';
+      const files = Array.from(filesInput.files).slice(0,6);
+      files.forEach(f => {
+        const img = document.createElement('img');
+        img.className = 'thumb';
+        img.src = URL.createObjectURL(f);
+        img.alt = f.name;
+        previewGrid.appendChild(img);
+      });
+    });
+
+    function loadProjects() {
+      projectsGrid.innerHTML = '';
+      const arr = JSON.parse(localStorage.getItem('abhiveer_projects') || '[]');
+      if (!arr.length) {
+        projectsGrid.innerHTML = '<div class="empty">No projects yet — submit one using the form.</div>';
+        return;
+      }
+      arr.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card project-card';
+        let imgHtml = '';
+        if (p.preview) imgHtml = '<div class="thumb-wrap"><img src="'+p.preview+'" alt=""></div>';
+        card.innerHTML = imgHtml + '<h4>' + escapeHtml(p.title) + '</h4><p class="muted">' + escapeHtml(p.description) + '</p><div class="meta"><span>' + (p.budget? '₹'+escapeHtml(p.budget) : '') + '</span><span>' + escapeHtml(p.contact||'') + '</span></div>';
+        projectsGrid.appendChild(card);
+      });
+    }
+
+    function escapeHtml(str = '') {
+      return str.replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    projectForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = new FormData(projectForm);
+      const title = form.get('title') || 'Untitled';
+      const description = form.get('description') || '';
+      const budget = form.get('budget') || '';
+      const contact = form.get('contact') || '';
+      const files = Array.from(filesInput.files).slice(0,6);
+
+      // create preview for first image (data URL)
+      if (files.length) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          saveProject({ title, description, budget, contact, preview: evt.target.result });
+        };
+        reader.readAsDataURL(files[0]);
+      } else {
+        saveProject({ title, description, budget, contact, preview: null });
+      }
+      hideModal();
+      projectForm.reset();
+      previewGrid.innerHTML = '';
+    });
+
+    function saveProject(obj) {
+      const arr = JSON.parse(localStorage.getItem('abhiveer_projects') || '[]');
+      arr.unshift(Object.assign({ id: Date.now(), createdAt: new Date().toISOString() }, obj));
+      localStorage.setItem('abhiveer_projects', JSON.stringify(arr));
+      loadProjects();
+      alert('Thanks — your project was added locally. Replace this with an API call to store on server.');
+    }
+
+    clearLocal.addEventListener('click', () => {
+      if (!confirm('Clear all local projects?')) return;
+      localStorage.removeItem('abhiveer_projects');
+      loadProjects();
+    });
+
+    // init
+    loadProjects();
+  </script>
 </body>
 </html>
