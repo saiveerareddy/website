@@ -1,114 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Live TV | IPTV Watch</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Live IPTV Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Video.js -->
-  <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
-
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4898030606400937"
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4898030606400937"
      crossorigin="anonymous"></script>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0f172a;
-      color: #fff;
-    }
+<!-- hls.js -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-    header {
-      background: #020617;
-      padding: 15px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #fff;
+}
 
-    .container {
-      display: flex;
-      height: calc(100vh - 60px);
-    }
+header {
+  background: #020617;
+  padding: 14px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-    .sidebar {
-      width: 300px;
-      background: #020617;
-      border-right: 1px solid #1e293b;
-      overflow-y: auto;
-    }
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
 
-    .sidebar input {
-      width: 90%;
-      margin: 10px;
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-    }
+.sidebar {
+  width: 300px;
+  background: #020617;
+  overflow-y: auto;
+  border-right: 1px solid #1e293b;
+}
 
-    .channel {
-      padding: 10px;
-      cursor: pointer;
-      border-bottom: 1px solid #1e293b;
-    }
+.sidebar input {
+  width: 90%;
+  margin: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+}
 
-    .channel:hover {
-      background: #1e293b;
-    }
+.channel {
+  padding: 10px;
+  border-bottom: 1px solid #1e293b;
+  cursor: pointer;
+}
 
-    .player-section {
-      flex: 1;
-      padding: 10px;
-    }
+.channel:hover {
+  background: #1e293b;
+}
 
-    .video-js {
-      width: 100%;
-      height: 60vh;
-    }
+.player {
+  flex: 1;
+  padding: 10px;
+}
 
-    .ads {
-      margin-top: 10px;
-      text-align: center;
-    }
+video {
+  width: 100%;
+  height: 60vh;
+  background: black;
+}
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
+.ads {
+  margin-top: 10px;
+  text-align: center;
+}
 
-      .sidebar {
-        width: 100%;
-        height: 250px;
-      }
-    }
-  </style>
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: 250px;
+  }
+}
+</style>
 </head>
+
 <body>
 
 <header>📺 Free Live IPTV Channels</header>
 
 <div class="container">
-  <!-- Channel List -->
   <div class="sidebar">
-    <input type="text" id="search" placeholder="Search channel..." />
+    <input type="text" id="search" placeholder="Search channel...">
     <div id="channels"></div>
   </div>
 
-  <!-- Player -->
-  <div class="player-section">
-    <video id="player" class="video-js vjs-default-skin" controls autoplay></video>
+  <div class="player">
+    <video id="video" controls autoplay></video>
 
-    <!-- Ad Section -->
+    <!-- Ad -->
     <div class="ads">
       <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-4898030606400937"
-           data-ad-slot="1234567890"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
+        style="display:block"
+        data-ad-client="ca-pub-4898030606400937"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
       <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
@@ -116,50 +114,62 @@
   </div>
 </div>
 
-<!-- Video.js -->
-<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
-
 <script>
 const M3U_URL = "https://iptv-org.github.io/iptv/index.m3u";
-const channelContainer = document.getElementById("channels");
+const channelsDiv = document.getElementById("channels");
 const searchInput = document.getElementById("search");
-const player = videojs("player");
-
+const video = document.getElementById("video");
+let hls;
 let channels = [];
 
 fetch(M3U_URL)
   .then(res => res.text())
-  .then(data => parseM3U(data));
+  .then(text => parseM3U(text))
+  .catch(() => alert("Failed to load channel list"));
 
 function parseM3U(data) {
   const lines = data.split("\n");
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].startsWith("#EXTINF")) {
-      const name = lines[i].split(",")[1];
+      const name = lines[i].split(",")[1] || "Unknown Channel";
       const url = lines[i + 1];
-      channels.push({ name, url });
+      if (url && url.startsWith("http")) {
+        channels.push({ name, url });
+      }
     }
   }
   renderChannels(channels);
 }
 
 function renderChannels(list) {
-  channelContainer.innerHTML = "";
+  channelsDiv.innerHTML = "";
   list.forEach(ch => {
     const div = document.createElement("div");
     div.className = "channel";
-    div.innerText = ch.name;
+    div.textContent = ch.name;
     div.onclick = () => playChannel(ch.url);
-    channelContainer.appendChild(div);
+    channelsDiv.appendChild(div);
   });
 }
 
 function playChannel(url) {
-  player.src({
-    src: url,
-    type: "application/x-mpegURL"
-  });
-  player.play();
+  if (hls) {
+    hls.destroy();
+  }
+
+  if (Hls.isSupported()) {
+    hls = new Hls();
+    hls.loadSource(url);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      video.play();
+    });
+  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    video.src = url;
+    video.play();
+  } else {
+    alert("This stream is not supported in your browser");
+  }
 }
 
 searchInput.addEventListener("input", () => {
